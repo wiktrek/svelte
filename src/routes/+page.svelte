@@ -1,3 +1,6 @@
+<script>
+</script>
+
 <div>
-	<p>No data</p>
+	<p>Home page</p>
 </div>
