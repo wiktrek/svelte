@@ -2,6 +2,8 @@
 	import { writable } from 'svelte/store';
 	let money = 0;
 	let cursor_amount = 0;
+	money = parseFloat(localStorage.getItem('money') as string);
+	cursor_amount = parseFloat(localStorage.getItem('cursor_amount') as string);
 	function addOne() {
 		money += 1;
 		localStorage.setItem('money', `${money}`);
