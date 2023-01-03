@@ -3,5 +3,7 @@
 	<p class="text-xl">cursor costs 100</p>
 	<p>farm gives 10</p>
 	<p class="text-xl">farm costs 1000</p>
+	<p>mine gives 110</p>
+	<p class="text-xl">mine costs 10000</p>
 	<a href="/projects/clicker">Return</a>
 </div>
