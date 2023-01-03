@@ -2,17 +2,19 @@
 	import { writable } from 'svelte/store';
 	let money = 0;
 	let cursor_amount = 0;
+	let farm_amount = 0;
 	let loaded = false;
 	if (typeof localStorage !== 'undefined') {
 		if (loaded === false) {
 			money = parseFloat(localStorage.getItem('money') as string);
 			cursor_amount = parseFloat(localStorage.getItem('cursor_amount') as string);
+			farm_amount = parseFloat(localStorage.getItem('farm_amount') as string);
 		}
 
 		setInterval(() => {
-			console.log(loaded);
 			localStorage.setItem('money', `${money}`);
 			localStorage.setItem('cursor_amount', `${cursor_amount}`);
+			localStorage.setItem('farm_amount', `${farm_amount}`);
 		}, 1000);
 	}
 	function addOne() {
@@ -20,14 +22,21 @@
 	}
 
 	function buycursor() {
-		if (money < 200) return;
-		money -= 200;
+		if (money < 100) return;
+		money -= 100;
 		cursor_amount += 1;
+	}
+	function buyfarm() {
+		if (money < 2000) return;
+		money -= 2000;
+		farm_amount += 1;
 	}
 	function cursor() {
 		money += 1 * cursor_amount;
 	}
-
+	function farm() {
+		money += 10 * farm_amount;
+	}
 	setInterval(cursor, 500);
 </script>
 
@@ -38,8 +47,12 @@
 		<button on:click={addOne} class="w-64 h-64 bg-slate-600 rounded-2xl" />
 		<div>
 			<button on:click={buycursor}>buy cursor</button>
+			<p>cursors: {cursor_amount}</p>
 		</div>
-		<p>cursors: {cursor_amount}</p>
+		<div>
+			<button on:click={buyfarm}>buy farm</button>
+			<p>farms: {farm_amount}</p>
+		</div>
 		<a href="/projects/clicker/info">Info</a>
 		<p class="text-xs">Aplication saves every second</p>
 	</div>
