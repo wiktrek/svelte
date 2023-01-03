@@ -6,12 +6,15 @@
 	let loaded = false;
 	if (typeof localStorage !== 'undefined') {
 		if (loaded === false) {
-			money = parseFloat(localStorage.getItem('money') as string);
-			cursor_amount = parseFloat(localStorage.getItem('cursor_amount') as string);
-			farm_amount = parseFloat(localStorage.getItem('farm_amount') as string);
+			money = parseFloat(localStorage.getItem('money') as string) || 0;
+			cursor_amount = parseFloat(localStorage.getItem('cursor_amount') as string) || 0;
+			farm_amount = parseFloat(localStorage.getItem('farm_amount') as string) || 0;
+
+			loaded = true;
 		}
 
-		setInterval(() => {
+		const a = setInterval(() => {
+			console.log(loaded);
 			localStorage.setItem('money', `${money}`);
 			localStorage.setItem('cursor_amount', `${cursor_amount}`);
 			localStorage.setItem('farm_amount', `${farm_amount}`);
