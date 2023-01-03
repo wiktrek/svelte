@@ -61,6 +61,9 @@
 	setInterval(mine, 1000);
 </script>
 
+<head>
+	<title>clicker: {money} - svelte.wiktrek.xyz</title>
+</head>
 <div class="flex flex-col items-center justify-center h-[95vh]">
 	<!-- gui -->
 	<div class="text-center text-2xl">

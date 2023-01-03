@@ -1,3 +1,6 @@
+<head>
+	<title>clicker info- svelte.wiktrek.xyz</title>
+</head>
 <div class="flex flex-col items-center justify-center h-[95vh] text-2xl">
 	<p>cursor gives 1</p>
 	<p class="text-xl">cursor costs 100</p>
