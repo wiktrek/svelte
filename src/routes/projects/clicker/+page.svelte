@@ -38,7 +38,7 @@
 	}
 	function buymine() {
 		if (money < 10000) return;
-		money -= 100000;
+		money -= 10000;
 		mine_amount += 1;
 	}
 	function cursor() {
