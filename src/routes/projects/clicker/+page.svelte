@@ -30,8 +30,8 @@
 		cursor_amount += 1;
 	}
 	function buyfarm() {
-		if (money < 2000) return;
-		money -= 2000;
+		if (money < 1000) return;
+		money -= 1000;
 		farm_amount += 1;
 	}
 	function cursor() {
@@ -41,6 +41,7 @@
 		money += 10 * farm_amount;
 	}
 	setInterval(cursor, 500);
+	setInterval(farm, 500);
 </script>
 
 <div class="flex flex-col items-center justify-center h-[95vh]">
