@@ -40,6 +40,11 @@
 	function farm() {
 		money += 10 * farm_amount;
 	}
+	function reset() {
+		money = 0;
+		cursor_amount = 0;
+		farm_amount = 0;
+	}
 	setInterval(cursor, 500);
 	setInterval(farm, 500);
 </script>
@@ -48,16 +53,20 @@
 	<!-- gui -->
 	<div class="text-center text-2xl">
 		<h1>{money}</h1>
+
 		<button on:click={addOne} class="w-64 h-64 bg-slate-600 rounded-2xl" />
-		<div>
-			<button on:click={buycursor}>buy cursor</button>
-			<p>cursors: {cursor_amount}</p>
-		</div>
-		<div>
-			<button on:click={buyfarm}>buy farm</button>
-			<p>farms: {farm_amount}</p>
-		</div>
+		<ul class="list-none">
+			<li>
+				<button on:click={buycursor}>buy cursor</button>
+				<p>cursors: {cursor_amount}</p>
+			</li>
+			<li>
+				<button on:click={buyfarm}>buy farm</button>
+				<p>farms: {farm_amount}</p>
+			</li>
+		</ul>
 		<a href="/projects/clicker/info">Info</a>
 		<p class="text-xs">Aplication saves every second</p>
+		<button class="text-xs" on:click={reset}>RESET</button>
 	</div>
 </div>
