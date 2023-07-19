@@ -1,13 +1,13 @@
 <head>
 	<title>projects - svelte.wiktrek.xyz</title>
 </head>
-<div>
+<div class="text-xl justify-center text-center items-center">
 	<ul>
 		<li>
 			<a href="/projects/clicker">clicker</a>
 		</li>
 		<li>
-			<a href="/projects">projects</a>
+			<a href="https://project.wiktrek.xyz/">projects</a>
 		</li>
 	</ul>
 </div>
