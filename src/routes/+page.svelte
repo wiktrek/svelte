@@ -1,9 +1,2 @@
-<script>
-</script>
-
-<head>
-	<title>home - svelte.wiktrek.xyz</title>
-</head>
-<div class="text-xl justify-center text-center items-center">
-	<p>Home page</p>
-</div>
+<h1>Welcome to SvelteKit</h1>
+<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
