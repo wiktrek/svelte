@@ -1,11 +1,12 @@
 <script lang="ts">
+import { writable } from 'svelte/store';
 const todos: string[] = [];
-let error = ""
+let error = writable("")
 let todo = ""
 function submit() {
 if (todos.includes(todo)) {
 console.log("Err")
-return error == "Error to do already exists"
+return error.set("Error to do already exists")
 }
 todos.push(todo)
 
@@ -19,5 +20,5 @@ function save() {
 <div>
 <input placeholder="enter to do name" class="bg-transparent" id="name" bind:value={todo}/>
 <button class="bg-[#0cabc0] rounded" on:click={submit}>Add to do</button>
-<p>{error}</p>
+<p class="text-[#ef2572]">{$error}</p>
 </div>
