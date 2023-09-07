@@ -13,10 +13,8 @@ let error = writable("")
 let todo = ""
 if (typeof localStorage !== `undefined`) {
     if (localStorage.getItem("todos") !== null) {
-        console.log(true)
         todos = JSON.parse(localStorage.getItem("todos") || "[]");
         todos_writable.set(todos)
-        console.log(todos, JSON.parse(localStorage.getItem("todos") || "[]"))
     }
 }
 function submit() {
