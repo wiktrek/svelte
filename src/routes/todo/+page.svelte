@@ -5,13 +5,21 @@ interface Todo {
  done: boolean;
 }
 import { writable, type Writable } from 'svelte/store';
-const todos: Todo[] = [];
-const todos_writable: Writable<Todo[]> = writable([]);
+
+
+let todos: Todo[] = []
+const todos_writable: Writable<Todo[]> = writable(todos);
 let error = writable("")
 let todo = ""
-
+if (typeof localStorage !== `undefined`) {
+    if (localStorage.getItem("todos") !== null) {
+        console.log(true)
+        todos = JSON.parse(localStorage.getItem("todos") || "[]");
+        todos_writable.set(todos)
+        console.log(todos, JSON.parse(localStorage.getItem("todos") || "[]"))
+    }
+}
 function submit() {
-load()
 error.set("")
 todos.map(t => {
     if (t.todo === todo) {
@@ -23,12 +31,11 @@ if ($error !== "") return
 
 todos.push({todo, done: false})
 todos_writable.set(todos)
-console.log(todo, todos)
 save()
 }
 function load() {
-let json = localStorage.getItem("todos") || "[]"
-todos == JSON.parse(json)
+todos == $todos_writable
+save()
 }
 function save() {
 let json = JSON.stringify(todos);
@@ -38,9 +45,11 @@ todos_writable.subscribe(todos => {
         todos.map((t, i) => {
     if (t.done) {
         todos.splice(i, 1)
+    load()
     }
-    })
 })
+})
+
 </script>
 <div>
 <input placeholder="enter to do name" class="bg-transparent" id="name" bind:value={todo}/>
