@@ -1,5 +1,10 @@
 <!-- expense tracker -->
+<!-- 
+    sort by time, date, month
+    add expense
+    ui
 
+-->
 
 
 <script lang="ts">
@@ -11,18 +16,18 @@ time: number;
 }
 
 interface Day {
-date: string;
+date: number;
 expenses: Expense[];    
 }
 interface Month {
     expenses: Day[]
-    month: string;
+    month: number;
 }
 let expenses: Month[] = []
 let example: Month = {
-    month: "09",
+    month: 9,
     expenses: [{
-        date: "11",
+        date: 11,
         expenses: [{
             amount: 10,
             currency: "zł",
@@ -53,13 +58,19 @@ return result
 result = `${h}:${minutes}`
 return result
 }
+function format(a: number): string {
+if (a < 10) {
+    return `0${a}`
+}
+return `${a}`
+}
 </script>
 <div>
 <p>Expenses</p>
 {#each expenses as expense}
-    <p>month: {expense.month}</p>
+    <p>month: {format(expense.month)}</p>
     {#each expense.expenses as day}
-    <p>day: {day.date}</p>
+    <p>day: {format(day.date)}</p>
         {#each day.expenses as expense}
         
         <p>{min_to_h(expense.time)} amount spent: {expense.amount}{expense.currency}</p>
