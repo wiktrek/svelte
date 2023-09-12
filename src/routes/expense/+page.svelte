@@ -3,15 +3,17 @@
     sort by time, date, month
     add expense
     ui
-
+    select currency
 -->
 
 
 <script lang="ts">
+interface Settings {
+    currency: string;
+}
 // time = minutes
 interface Expense {
 amount: number;
-currency: string;
 time: number;
 }
 
@@ -23,17 +25,20 @@ interface Month {
     expenses: Day[]
     month: number;
 }
+let settings: Settings = {
+    currency: "zł" 
+}
 let expenses: Month[] = []
 let example: Month = {
     month: 9,
     expenses: [{
         date: 11,
         expenses: [{
-            amount: 10,
-            currency: "zł",
+            amount: -10,
             time: 720
         },
-        { amount: 100, currency: "zł", time: 721}
+        { amount: -100, time: 721},
+        { amount: 90, time: 724}
     ]
     }]
 }
@@ -43,6 +48,7 @@ if (typeof localStorage !== `undefined`) {
         expenses = JSON.parse(localStorage.getItem("expenses") || "[]");
     }
 }
+let currency = settings.currency
 function save() {
 let json = JSON.stringify(expenses);
 localStorage.setItem("expenses", json)
@@ -65,15 +71,16 @@ if (a < 10) {
 return `${a}`
 }
 </script>
-<div>
+<div class="text-center justify-center items-center text-3xl">
 <p>Expenses</p>
 {#each expenses as expense}
     <p>month: {format(expense.month)}</p>
     {#each expense.expenses as day}
     <p>day: {format(day.date)}</p>
-        {#each day.expenses as expense}
+    <p>Total: {day.expenses.reduce((a, b) => a + b.amount, 0)}{currency}</p>    
+    {#each day.expenses as expense}
         
-        <p>{min_to_h(expense.time)} amount spent: {expense.amount}{expense.currency}</p>
+        <p>{min_to_h(expense.time)} {(expense.amount > 0) ? `got`: `spent`} {expense.amount.toFixed().replace("-", "")}{currency}</p>
         {/each}
     {/each}
 {/each}
