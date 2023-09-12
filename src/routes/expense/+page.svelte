@@ -26,7 +26,7 @@ interface Month {
     month: number;
 }
 let settings: Settings = {
-    currency: "zł" 
+    currency: "$" 
 }
 let expenses: Month[] = []
 let example: Month = {
@@ -74,14 +74,22 @@ return `${a}`
 <div class="text-center justify-center items-center text-3xl">
 <p>Expenses</p>
 {#each expenses as expense}
-    <p>month: {format(expense.month)}</p>
+<div class="pt-4">
+<p>month: {format(expense.month)}</p>
+    <p>Total {expense.expenses.reduce((a, b) => a + b.expenses.reduce((a, b) => a + b.amount, 0), 0)}{currency}</p>
     {#each expense.expenses as day}
-    <p>day: {format(day.date)}</p>
-    <p>Total: {day.expenses.reduce((a, b) => a + b.amount, 0)}{currency}</p>    
-    {#each day.expenses as expense}
+    <div class="p-4">
+        <p>day: {format(day.date)}</p>
+        <p>total: {day.expenses.reduce((a, b) => a + b.amount, 0)}{currency}</p>
         
-        <p>{min_to_h(expense.time)} {(expense.amount > 0) ? `got`: `spent`} {expense.amount.toFixed().replace("-", "")}{currency}</p>
+    {#each day.expenses as expense}
+        <div class="pt-1">
+            <p>{min_to_h(expense.time)} {(expense.amount > 0) ? `got`: `spent`} {expense.amount.toFixed().replace("-", "")}{currency}</p>
+        </div>
+        
         {/each}
+    </div>
     {/each}
+    </div>
 {/each}
 </div>
