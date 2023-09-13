@@ -8,23 +8,8 @@
 
 
 <script lang="ts">
-interface Settings {
-    currency: string;
-}
-// time = minutes
-interface Expense {
-amount: number;
-time: number;
-}
-
-interface Day {
-date: number;
-expenses: Expense[];    
-}
-interface Month {
-    expenses: Day[]
-    month: number;
-}
+import { format } from "$lib/expense"
+import type { Settings, Month} from "$lib/expense"
 let settings: Settings = {
     currency: "$" 
 }
@@ -40,9 +25,30 @@ let example: Month = {
         { amount: -100, time: 721},
         { amount: 90, time: 724}
     ]
-    }]
+},
+{
+        date: 12,
+        expenses: [{
+            amount: 200,
+            time: 500
+        },
+        { amount: -10, time: 243},
+        { amount: 10, time: 432}
+    ]
+}
+]    
 }
 expenses.push(example)
+sort()
+// if it works don't touch it
+function sort() {
+    expenses.map(e => {
+        e.expenses.sort((a,b) => a.date - b.date)
+        e.expenses.map(b => {
+            b.expenses.sort((a,b) => a.time - b.time)
+        })
+    })
+}
 if (typeof localStorage !== `undefined`) {
     if (localStorage.getItem("expenses") !== null) {
         expenses = JSON.parse(localStorage.getItem("expenses") || "[]");
@@ -64,27 +70,27 @@ return result
 result = `${h}:${minutes}`
 return result
 }
-function format(a: number): string {
-if (a < 10) {
-    return `0${a}`
-}
-return `${a}`
-}
+
 </script>
 <div class="text-center justify-center items-center text-3xl">
 <p>Expenses</p>
 {#each expenses as expense}
 <div class="pt-4">
-<p>month: {format(expense.month)}</p>
-    <p>Total {expense.expenses.reduce((a, b) => a + b.expenses.reduce((a, b) => a + b.amount, 0), 0)}{currency}</p>
+<p class="text-[#767dc1]">month: {format(expense.month)}</p>
+    <p class="text-[#ef2572]">Total {expense.expenses.reduce((a, b) => a + b.expenses.reduce((a, b) => a + b.amount, 0), 0)}{currency}</p>
     {#each expense.expenses as day}
-    <div class="p-4">
-        <p>day: {format(day.date)}</p>
-        <p>total: {day.expenses.reduce((a, b) => a + b.amount, 0)}{currency}</p>
+    <div class="pt-4">
+        <p class="text-[#767dc1]">day: {format(day.date)}</p>
+        <p class="text-[#ef2572]">total: {day.expenses.reduce((a, b) => a + b.amount, 0)}{currency}</p>
         
     {#each day.expenses as expense}
         <div class="pt-1">
-            <p>{min_to_h(expense.time)} {(expense.amount > 0) ? `got`: `spent`} {expense.amount.toFixed().replace("-", "")}{currency}</p>
+            <p class="text-[#fbfdfe]">
+                <i class="text-[#767dc1]">
+                {min_to_h(expense.time)} 
+                </i>
+                {(expense.amount > 0) ? `got ${expense.amount}${currency}`: `spent ${expense.amount * -1}${currency}`} 
+            </p>
         </div>
         
         {/each}
