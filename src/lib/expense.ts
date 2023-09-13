@@ -1,3 +1,4 @@
+// $lib/expense
 export function format(a: number): string {
 	if (a < 10) {
 		return `0${a}`;

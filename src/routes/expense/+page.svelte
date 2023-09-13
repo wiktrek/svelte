@@ -1,9 +1,6 @@
 <!-- expense tracker -->
 <!-- 
-    sort by time, date, month
     add expense
-    ui
-    select currency
 -->
 
 
