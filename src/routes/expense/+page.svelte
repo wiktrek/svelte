@@ -8,7 +8,8 @@
 
 
 <script lang="ts">
-import { format } from "$lib/expense"
+import Add from "../../components/Add.svelte"
+import { format, sort_month, min_to_h} from "$lib/expense"
 import type { Settings, Month} from "$lib/expense"
 let settings: Settings = {
     currency: "$" 
@@ -39,16 +40,9 @@ let example: Month = {
 ]    
 }
 expenses.push(example)
-sort()
-// if it works don't touch it
-function sort() {
-    expenses.map(e => {
-        e.expenses.sort((a,b) => a.date - b.date)
-        e.expenses.map(b => {
-            b.expenses.sort((a,b) => a.time - b.time)
-        })
-    })
-}
+expenses == sort_month(expenses)
+
+
 if (typeof localStorage !== `undefined`) {
     if (localStorage.getItem("expenses") !== null) {
         expenses = JSON.parse(localStorage.getItem("expenses") || "[]");
@@ -59,18 +53,6 @@ function save() {
 let json = JSON.stringify(expenses);
 localStorage.setItem("expenses", json)
 }
-function min_to_h(m: number): string{
-let result: string = "";
-let h: number = Number((m / 60).toFixed())
-let minutes = m - (h * 60)
-if (minutes < 10) {
-result = `${h}:0${minutes}`
-return result
-}
-result = `${h}:${minutes}`
-return result
-}
-
 </script>
 <div class="text-center justify-center items-center text-3xl">
 <p>Expenses</p>
@@ -98,4 +80,5 @@ return result
     {/each}
     </div>
 {/each}
+<Add />
 </div>
