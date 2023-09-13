@@ -67,6 +67,11 @@ if (typeof localStorage !== `undefined`) {
     }
 }
 let currency = settings.currency
+function load() {
+let json = JSON.parse(localStorage.getItem("expenses") as string)
+expenses == json
+expenses_writable.set(expenses)
+}
 function save() {
 let json = JSON.stringify(expenses);
 localStorage.setItem("expenses", json)
