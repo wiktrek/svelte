@@ -21,20 +21,21 @@ let months: month[] = [
 ];
 </script>
 <div class="text-3xl w-screen ">
-    <p class="absolute top-0 text-xl right-4">Currency 
-    <input type="text" class="bg-[#05080a] rounded-md m-1 border-none outline-none w-12 pl-2" placeholder={40}/> 
-    </p>
-    
     <div class="mx-auto flex  w-screen flex-col items-center justify-center text-center text-3xl text-[#ef2572]">
     <p>Add</p>
-    <select class="rounded-md border-none bg-[#05080a]" id="select">
+    <select class="rounded-md border-none bg-[#05080a] w-64 p-2" id="select">
         {#each months as month}
             <option value={month.number} class="text-xl border-none">{month.name}</option>
         {/each}
     </select>
-   <input type="text" class=" pl-2 bg-[#05080a] rounded-md m-1 border-none outline-none" placeholder="Subscriptions"/>
-   <input type="number" class="pl-2 bg-[#05080a] rounded-md m-1 border-none outline-none" placeholder={40}/> 
-    <input type="number" class="pl-2 bg-[#05080a] rounded-md m-1 border-none outline-none" placeholder={11}/>
-
+    <select class="rounded-md border-none bg-[#05080a] w-64" id="select2">
+            <option value={true} class="text-xl border-none">spent</option>
+            <option value={false} class="text-xl border-none">made</option>
+    </select>
+   <input id="day"type="number" class="pl-2 bg-[#05080a] rounded-md m-1 border-none outline-none" placeholder="day"/>
+   <input id="expense" type="text" class=" pl-2 bg-[#05080a] rounded-md m-1 border-none outline-none" placeholder="subscriptions"/>
+   <p>
+   <input id="amount" type="number" class="pl-2 bg-[#05080a] rounded-md m-1 border-none outline-none" placeholder="Amount"/> 
+   </p>
 </div>
 </div>

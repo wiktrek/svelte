@@ -28,7 +28,7 @@ export function sort_month(expenses: Month[]): Month[] {
 
 // types
 export interface Settings {
-	currency: string;
+	currency?: string;
 }
 // time = minutes
 export interface Expense {

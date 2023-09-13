@@ -8,13 +8,16 @@
 
 
 <script lang="ts">
+import { writable, type Writable } from 'svelte/store';
 import Add from "../../components/Add.svelte"
 import { format, sort_month, min_to_h} from "$lib/expense"
 import type { Settings, Month} from "$lib/expense"
 let settings: Settings = {
-    currency: "$" 
+    currency: "zł" 
 }
 let expenses: Month[] = []
+let expenses_writable: Writable<Month[]> = writable(expenses)
+let error: Writable<string> = writable("")
 let example: Month = {
     month: 9,
     expenses: [{
@@ -41,8 +44,23 @@ let example: Month = {
 }
 expenses.push(example)
 expenses == sort_month(expenses)
+function add() {
+let day = Number((document.getElementById("day") as HTMLInputElement).value);
+let month = (document.getElementById("select") as HTMLSelectElement).value;
+let spent = (document.getElementById("select2") as HTMLSelectElement).value;
+let expense =(document.getElementById("expense") as HTMLInputElement).value;
+let amount =  Number((document.getElementById("amount") as HTMLInputElement).value);
+if (day == null || expense == null || amount == null) return error.set("Error");
+
+if (spent == "true") {
+console.log("ew")
+amount *= -1
+}
+if (day >= 32) return error.set("Day needs to be less than 32");
 
 
+console.log(day, month, amount, expense,spent)
+}
 if (typeof localStorage !== `undefined`) {
     if (localStorage.getItem("expenses") !== null) {
         expenses = JSON.parse(localStorage.getItem("expenses") || "[]");
@@ -55,8 +73,12 @@ localStorage.setItem("expenses", json)
 }
 </script>
 <div class="text-center justify-center items-center text-3xl">
+    <p class="absolute top-0 text-xl right-4">Currency
+    <input type="text" class="bg-[#05080a] rounded-md m-1 border-none outline-none w-12 pl-2" placeholder={settings.currency || `€`}/> 
+    </p>
+    
 <p>Expenses</p>
-{#each expenses as expense}
+{#each $expenses_writable as expense}
 <div class="pt-4">
 <p class="text-[#767dc1]">month: {format(expense.month)}</p>
     <p class="text-[#ef2572]">Total {expense.expenses.reduce((a, b) => a + b.expenses.reduce((a, b) => a + b.amount, 0), 0)}{currency}</p>
@@ -81,4 +103,6 @@ localStorage.setItem("expenses", json)
     </div>
 {/each}
 <Add />
+<button type="submit" on:click={add} class=""><p class="text-[#ef2572]">Add</p></button>
+<p>{$error}</p>
 </div>
