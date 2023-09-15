@@ -16,6 +16,16 @@ export function min_to_h(m: number): string {
 	result = `${h}:${minutes}`;
 	return result;
 }
+export function h_to_min(hStr: string): number {
+	let minutes = -100;
+	const a = hStr.split(':');
+	if (a.length != 2) return -100;
+	const h = Number(a[0]);
+	const m = Number(a[1]);
+	if (m > 60 || h > 24 || a[0].length != 2 || a[1].length != 2 || m < 0 || h < 0) return -100;
+	minutes = h * 60 + m;
+	return minutes;
+}
 // if it works don't touch it
 export function sort_month(expenses: Month[]): Month[] {
 	expenses.map((e) => {

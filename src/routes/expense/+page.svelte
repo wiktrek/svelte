@@ -7,7 +7,7 @@
 <script lang="ts">
 import { writable, type Writable } from 'svelte/store';
 import Add from "../../components/Add.svelte"
-import { format, sort_month, min_to_h} from "$lib/expense"
+import { format, sort_month, min_to_h, h_to_min} from "$lib/expense"
 import type { Settings, Month} from "$lib/expense"
 let settings: Settings = {
     currency: "zł" 
@@ -46,17 +46,65 @@ let day = Number((document.getElementById("day") as HTMLInputElement).value);
 let month = (document.getElementById("select") as HTMLSelectElement).value;
 let spent = (document.getElementById("select2") as HTMLSelectElement).value;
 let expense =(document.getElementById("expense") as HTMLInputElement).value;
+let time = h_to_min((document.getElementById("time") as HTMLInputElement).value);
 let amount =  Number((document.getElementById("amount") as HTMLInputElement).value);
 if (day == null || expense == null || amount == null) return error.set("Error");
-
+if ( amount < 0 ) return error.set("Amount less than zero")
+if (day >= 32) return error.set("Day needs to be less than 32");
+if (time < 0) return error.set("Time 00:00")
 if (spent == "true") {
 console.log("ew")
 amount *= -1
 }
-if (day >= 32) return error.set("Day needs to be less than 32");
 
+console.log(day, month, amount, expense,spent, time)
+push({
+    expenses: [
+        {
+            date: day,
+            expenses: [{
+                amount: amount,
 
-console.log(day, month, amount, expense,spent)
+                time: time
+            }]
+        }
+    ],
+    month: Number(month)
+})
+error.set(" ")
+}
+function push(a: Month) {
+let pushed = false;
+// map months
+expenses.map(e => {
+    if (pushed == true) return;
+    if (e.month == a.month) {
+    // map days
+    e.expenses.map(b => {
+    if (pushed == true) return;
+    if (b.date == a.expenses[0].date) {
+        pushed = true;
+        return b.expenses.push({ amount: a.expenses[0].expenses[0].amount, time: a.expenses[0].expenses[0].time})
+    }
+    })
+    // @ts-expect-error TS2367)
+    if (pushed == true) return;
+    pushed = true
+    return e.expenses.push({
+    date: a.expenses[0].date,
+    expenses: [{
+    amount: a.expenses[0].expenses[0].amount,
+    time: a.expenses[0].expenses[0].time,
+    }]
+    })
+    }
+    // @ts-expect-error TS2367)
+    if (pushed == true) return;
+    pushed = true
+    expenses.push(a)
+})
+expenses == sort_month(expenses)
+expenses_writable.set(expenses)
 }
 if (typeof localStorage !== `undefined`) {
     if (localStorage.getItem("expenses") !== null) {
@@ -74,7 +122,7 @@ let json = JSON.stringify(expenses);
 localStorage.setItem("expenses", json)
 }
 </script>
-<div class="text-center justify-center items-center text-3xl">
+<div class="text-center justify-center items-center text-3xl bg-[#161718]">
     <p class="absolute top-0 text-xl right-4">Currency
     <input type="text" class="bg-[#05080a] rounded-md m-1 border-none outline-none w-12 pl-2" placeholder={settings.currency || `€`}/> 
     </p>

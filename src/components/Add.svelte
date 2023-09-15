@@ -28,12 +28,15 @@ let months: month[] = [
             <option value={month.number} class="text-xl border-none">{month.name}</option>
         {/each}
     </select>
+   <input id="day"type="number" class="w-64 pl-2 bg-[#05080a] rounded-md m-1 border-none outline-none" placeholder="day"/>
+    <input class="rounded-md border-none bg-[#05080a] w-64" id="time" type="datetime" placeholder="14:00">
     <select class="rounded-md border-none bg-[#05080a] w-64" id="select2">
             <option value={true} class="text-xl border-none">spent</option>
-            <option value={false} class="text-xl border-none">made</option>
+            <option value={false} class="text-xl border-none">received</option>
     </select>
-   <input id="day"type="number" class="pl-2 bg-[#05080a] rounded-md m-1 border-none outline-none" placeholder="day"/>
-   <input id="expense" type="text" class=" pl-2 bg-[#05080a] rounded-md m-1 border-none outline-none" placeholder="subscriptions"/>
+
+
+    <input id="expense" type="text" class=" pl-2 bg-[#05080a] rounded-md m-1 border-none outline-none" placeholder="subscriptions"/>
    <p>
    <input id="amount" type="number" class="pl-2 bg-[#05080a] rounded-md m-1 border-none outline-none" placeholder="Amount"/> 
    </p>
