@@ -112,6 +112,7 @@
 		expenses == sort_month(expenses);
 		expenses_writable.set(expenses);
 	}
+
 	if (typeof localStorage !== `undefined`) {
 		if (localStorage.getItem('expenses') !== null) {
 			expenses = JSON.parse(localStorage.getItem('expenses') || '[]');
